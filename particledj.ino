@@ -46,7 +46,8 @@ void loop() {
     if (millis() - last > 200 && digitalRead(buttonPin)) {
         if (ready) {
             ready = false;
-            Particle.publish("play", name);
+            Particle.publish("play", "{ \"playlist\": \"" + name + "\", \"trackNum\": \"" + trackNum + "\"}" );
+            trackNum++;
         } else {
             ready = true;
         }

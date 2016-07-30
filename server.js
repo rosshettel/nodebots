@@ -6,7 +6,9 @@ var iTunes = require("./itunescontrol"),
 particle.getEventStream({auth: process.env.TOKEN, deviceId: 'mine'}).then(function(stream) {
     stream.on('event', function (event) {
         if (event.name === 'play') {
-            iTunes.playPlaylist(event.data, 1);
+            var data = JSON.parse(event.data);
+            console.log(data);
+            iTunes.playPlaylist(data.playlist, data.trackNum);
         }
 
         if (event.name === 'volumeChange' ) {
