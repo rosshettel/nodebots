@@ -1,53 +1,18 @@
-//////// Customize this data! /////////
-//
-var particleEmail = process.env.EMAIL
-var particlePass = process.env.PASS
-var particleToken = process.env.PARTICLE_TOKEN
-//
-///////////////////////////////////////
 
-var iTunes = require("./itunescontrol");
-var Particle = require("particle-api-js");
-var particle = new Particle();
+var iTunes = require("./itunescontrol"),
+    Particle = require("particle-api-js"),
+    particle = new Particle();
 
-particle.on('login', function() {
+particle.getEventStream({auth: process.env.TOKEN, deviceId: 'mine'}).then(function(stream) {
+    stream.on('event', function (event) {
+        if (event.name === 'play') {
+            iTunes.playPlaylist(event.data, 1);
+        }
 
-  // Play playlist
+        if (event.name === 'volumeChange' ) {
+            iTunes.setVolume(event.data);
+        }
 
-  var play = particle.getEventStream({
-    name: "play", // event name
-    auth: particleToken // access token
-  });
-
-  play.then(
-    function (data) {
-      console.log("PLAY event from device 1");
-      console.log(data);
-      iTunes.playPlaylist(data.playlist, data.track);
-    },
-    function (err) {
-      console.log("ERROR: " + err);
-    }
-  );
-
-  // Set volume
-
-  var volume = particle.getEventStream({
-    name: "volumeChange", // event name
-    auth: particleToken // access token
-  });
-
-  volume.then(
-    function (data) {
-      console.log("VOLUME CHANGE event from device 1");
-      console.log(data);
-      iTunes.setVolume(data.volume);
-    },
-    function (err) {
-      console.log("ERROR: " + err);
-    }
-  );
-
+        console.log("Event received", event);
+    });
 });
-
-particle.login({ username: particleEmail, password: particlePass });

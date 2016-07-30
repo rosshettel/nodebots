@@ -10,6 +10,7 @@ bool ready = true;
 int last;
 
 bool isPlaying = false;
+int trackNum = 1;
 int musicLevel = 0;
 
 char name[10];
@@ -21,7 +22,7 @@ void playHandler(const char *event, const char *data) {
         isPlaying = true;
     } else {
         Serial.println("This device is not playing");
-        isPlaying = false;  
+        isPlaying = false;
     }
 }
 

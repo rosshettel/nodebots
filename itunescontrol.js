@@ -11,8 +11,7 @@ var itunesControl = function () {
     };
 
     this.playPlaylist = function (playlist, track) {
-        var command = "tell application \"iTunes\" \n play track " + track + " of user playlist \"" + playlist + "\" \n set player position to 18 \n end tell";
-
+        var command = "tell application \"iTunes\" to play track " + track + " of user playlist \"" + playlist + "\"";
         if (playlist && track) {
           applescript.execString(command, function (err, res) {
               if (err) {
