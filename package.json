@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "applescript": "^1.0.0",
     "johnny-five": "^0.9.61",
     "particle-cli": "^1.15.0",
     "particle-io": "^0.12.0"
