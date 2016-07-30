@@ -58,7 +58,4 @@ var itunesControl = function () {
     };
 };
 
-var itunes = new itunesControl();
-itunes.partyMode();
-
 module.exports = new itunesControl();
