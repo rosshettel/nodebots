@@ -6,8 +6,7 @@ var particleToken = process.env.PARTICLE_TOKEN
 //
 ///////////////////////////////////////
 
-// Set up Photon
-
+var iTunes = require("./itunescontrol");
 var Particle = require("particle-api-js");
 var particle = new Particle();
 
@@ -24,6 +23,7 @@ particle.on('login', function() {
     function (data) {
       console.log("PLAY event from device 1");
       console.log(data);
+      iTunes.playPlaylist(data.playlist, data.track);
     },
     function (err) {
       console.log("ERROR: " + err);
@@ -41,6 +41,7 @@ particle.on('login', function() {
     function (data) {
       console.log("VOLUME CHANGE event from device 1");
       console.log(data);
+      iTunes.setVolume(data.volume);
     },
     function (err) {
       console.log("ERROR: " + err);

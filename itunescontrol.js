@@ -10,14 +10,19 @@ var itunesControl = function () {
         });
     };
 
-    this.partyMode = function () {
-        var command = "tell application \"iTunes\" \n play track 1 of user playlist \"Party Mode\" \n set player position to 18 \n end tell";
-        applescript.execString(command, function (err, res) {
-            if (err) {
-                console.log("Error controlling iTunes", err);
-            }
-            console.log(err);
-        });
+    this.playPlaylist = function (playlist, track) {
+        var command = "tell application \"iTunes\" \n play track " + track + " of user playlist \"" + playlist + "\" \n set player position to 18 \n end tell";
+
+        if (playlist && track) {
+          applescript.execString(command, function (err, res) {
+              if (err) {
+                  console.log("Error controlling iTunes", err);
+              }
+              console.log(err);
+          });
+        } else {
+          console.log("ERROR: playlist name and track is required to be passed when calling playPlaylist()")
+        }
     };
 
     this.getVolume = function (callback) {
